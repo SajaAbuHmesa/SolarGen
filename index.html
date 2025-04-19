@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SolarGen - Smart Solar Charger</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="imgs/logo.png" type="image/x-icon">
+
+    <style>
+        :root {
+            --solar-yellow: #FFD700;
+            --deep-blue: #003366;
+            --eco-green: #2E8B57;
+            --light-gray: #F5F5F5;
+            --dark-gray: #333333;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark-gray);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+            scroll-margin-top: 70px;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--solar-yellow);
+            margin: 15px auto;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background-color: var(--solar-yellow);
+            color: var(--deep-blue);
+        }
+
+        .btn-primary:hover {
+            background-color: #FFC000;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--deep-blue);
+            color: var(--white);
+        }
+
+        .btn-secondary:hover {
+            background-color: #002244;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--solar-yellow);
+            color: var(--solar-yellow);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--solar-yellow);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-logo-img {
+            width: 40px;
+            /* Adjust to match your logo size */
+            height: 40px;
+            /* Adjust to match your logo size */
+        }
+
+        .header-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--deep-blue);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--solar-yellow);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--deep-blue);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        #hero {
+            background: linear-gradient(135deg, var(--deep-blue) 0%, #004080 100%);
+            color: var(--white);
+            padding: 150px 0 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            margin-bottom: 20px;
+            font-size: 3rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .hero-btns {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .hero-btns .btn {
+            min-width: 150px;
+        }
+
+        .hero-image {
+            margin-top: 50px;
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Problem Section */
+        #problem {
+            background-color: var(--light-gray);
+        }
+
+        .problem-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .problem-text {
+            flex: 1;
+        }
+
+        .problem-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .problem-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats {
+            display: flex;
+            margin-top: 30px;
+            gap: 30px;
+        }
+
+        .stat-item {
+            background-color: var(--white);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-item h3 {
+            color: var(--eco-green);
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        /* Solution Section */
+        #solution {
+            background-color: var(--white);
+        }
+
+        .solution-container {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .solution-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .solution-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.03);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .solution-features {
+            flex: 1;
+        }
+
+        .feature-item {
+            display: flex;
+            margin-bottom: 25px;
+        }
+
+        .feature-icon {
+            background-color: var(--solar-yellow);
+            color: var(--deep-blue);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        /* Features Section */
+        #features {
+            background-color: var(--light-gray);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            color: var(--solar-yellow);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        /* AI Section */
+        #ai {
+            background-color: var(--white);
+        }
+
+        .ai-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .ai-text {
+            flex: 1;
+        }
+
+        .ai-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .ai-image img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+
+        .benefits-list {
+            margin-top: 30px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .benefit-item i {
+            color: var(--solar-yellow);
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+        /* Sales Section */
+        #sales {
+            background-color: var(--deep-blue);
+            color: var(--white);
+        }
+
+        #sales h2 {
+            color: var(--white);
+        }
+
+        #sales h2::after {
+            background-color: var(--eco-green);
+        }
+
+        .sales-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .sales-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .sales-card:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .sales-card h3 {
+            color: var(--solar-yellow);
+            margin-bottom: 15px;
+        }
+
+        .sales-card .price {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 20px 0;
+            color: var(--white);
+        }
+
+        .sales-card ul {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .sales-card ul li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+            text-align: left;
+        }
+
+        .sales-card ul li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--eco-green);
+        }
+
+        /* Impact Section */
+        #impact {
+            background-color: var(--eco-green);
+            color: var(--white);
+        }
+
+        #impact h2 {
+            color: var(--white);
+        }
+
+        #impact h2::after {
+            background-color: var(--solar-yellow);
+        }
+
+        .impact-stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .impact-stat {
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .impact-stat i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--solar-yellow);
+        }
+
+        .impact-stat h3 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* Team Section */
+        #team {
+            background-color: var(--white);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .team-member {
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+
+        .member-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--light-gray);
+            margin: 0 auto 20px;
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover .member-photo {
+            border-color: var(--solar-yellow);
+        }
+
+        .member-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .member-role {
+            color: var(--eco-green);
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: var(--deep-blue);
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--solar-yellow);
+        }
+
+        /* Contact Section */
+        #contact {
+            background-color: var(--light-gray);
+        }
+
+        .contact-container {
+            display: flex;
+            gap: 50px;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 30px;
+        }
+
+        .contact-details {
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .contact-item i {
+            width: 40px;
+            height: 40px;
+            background-color: var(--solar-yellow);
+            color: var(--deep-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .social-media {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-media a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--deep-blue);
+            color: var(--white);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .social-media a:hover {
+            background-color: var(--solar-yellow);
+            color: var(--deep-blue);
+        }
+
+        .contact-form {
+            flex: 1;
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+        }
+
+        .contact-btns {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--deep-blue);
+            color: var(--white);
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-img {
+            width: 40px;
+            /* Adjust to match your logo size */
+            height: 40px;
+            /* Adjust to match your logo size */
+        }
+
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .footer-logo i {
+            color: var(--solar-yellow);
+            margin-right: 10px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--solar-yellow);
+        }
+
+        .copyright {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+
+            .problem-content,
+            .solution-container,
+            .ai-content,
+            .contact-container {
+                flex-direction: column;
+            }
+
+            .problem-image,
+            .solution-image,
+            .ai-image {
+                order: -1;
+                margin-bottom: 30px;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            nav {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+            }
+
+            nav.active {
+                transform: translateY(0);
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+
+            .stats {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 576px) {
+            section {
+                padding: 50px 0;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .feature-card {
+                padding: 20px;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-btns {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <img src="imgs/logo.png" alt="SolarGen Logo" class="header-logo-img">
+                <span class="header-logo-text">SolarGen</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#problem">The Problem</a></li>
+                    <li><a href="#solution">Our Solution</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#ai">AI Technology</a></li>
+                    <li><a href="#team">Our Team</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="container">
+            <div class="hero-content fade-in">
+                <h1>SolarGen – Smart, Sustainable, Anywhere</h1>
+                <p>A smart solar-powered phone charger built for off-grid use with AI weather alerts and IoT monitoring.
+                </p>
+                <div class="hero-btns">
+                    <a href="#sales" class="btn btn-primary">Buy Now</a>
+                    <a href="#solution" class="btn btn-outline">Learn More</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" class="fade-in">
+        <div class="container">
+            <h2>The Energy Problem</h2>
+            <div class="problem-content">
+                <div class="problem-text">
+                    <p>Over 2.5 billion people worldwide lack sustainable access to electricity, forcing them to rely on
+                        expensive and polluting fossil fuels for their energy needs. Even those with access to
+                        electricity face rising costs and environmental concerns.</p>
+                    <p>Current solar charging solutions lack smart optimization, making them inefficient and unreliable
+                        when people need power the most. This creates a barrier to digital inclusion and sustainable
+                        development.</p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <h3>2.5B+</h3>
+                            <p>People lack reliable electricity</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>75%</h3>
+                            <p>Higher cost of fossil fuel alternatives</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="problem-image">
+                    <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+                        alt="Energy poverty">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="fade-in">
+        <div class="container">
+            <h2>Our Solution – SolarGen</h2>
+            <div class="solution-container">
+                <div class="solution-image">
+                    <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+                        alt="SolarGen device">
+                </div>
+                <div class="solution-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div>
+                            <h3>MPPT Technology</h3>
+                            <p>Our portable solar charger uses Maximum Power Point Tracking to optimize energy
+                                harvesting in all conditions.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div>
+                            <h3>AI Optimization</h3>
+                            <p>Smart algorithms suggest optimal charging times based on weather patterns and your usage
+                                habits.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div>
+                            <h3>IoT Monitoring</h3>
+                            <p>Real-time performance tracking through our mobile app helps you manage your power
+                                effectively.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="fade-in">
+        <div class="container">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Eco-friendly</h3>
+                    <p>100% renewable energy solution that reduces your carbon footprint.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-robot"></i>
+                    <h3>AI-Powered</h3>
+                    <p>Smart charging algorithms maximize efficiency and battery life.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-cloud-sun"></i>
+                    <h3>Weather Optimization</h3>
+                    <p>Automatically adjusts charging based on weather forecasts.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-wifi"></i>
+                    <h3>IoT Connected</h3>
+                    <p>Monitor and control your device remotely via our mobile app.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-suitcase"></i>
+                    <h3>Portable Design</h3>
+                    <p>Lightweight and compact for travelers and remote workers.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h3>Affordable</h3>
+                    <p>Cost-effective solution with long-term savings.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Section -->
+    <section id="ai" class="fade-in">
+        <div class="container">
+            <h2>How AI Helps</h2>
+            <div class="ai-content">
+                <div class="ai-text">
+                    <p>SolarGen's artificial intelligence goes beyond simple charging to provide intelligent energy
+                        management tailored to your needs and environment.</p>
+                    <div class="benefits-list">
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Predicts optimal charging times based on weather patterns and historical data</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Analyzes your energy usage to suggest smarter charging habits</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Sends proactive alerts about potential power shortages</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Continuously learns and adapts to your personal usage patterns</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-image">
+                    <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+                        alt="AI technology">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sales Section -->
+    <section id="sales" class="fade-in">
+        <div class="container">
+            <h2>Get Your SolarGen</h2>
+            <div class="sales-options">
+                <div class="sales-card">
+                    <h3>Direct Purchase</h3>
+                    <p>Buy your SolarGen charger from us</p>
+                    <div class="price">$199.99</div>
+                    <ul>
+                        <li>SolarGen Portable Charger</li>
+                        <li>Basic Mobile App Access</li>
+                        <li>1 Year Warranty</li>
+                        <li>Free Shipping</li>
+                    </ul>
+                    <a href="under_development.Html" class="btn btn-primary">Buy Now</a>
+                </div>
+                <div class="sales-card">
+                    <h3>Partnership Program</h3>
+                    <p>For NGOs and aid organizations</p>
+                    <div class="price">Bulk Pricing</div>
+                    <ul>
+                        <li>Volume Discounts</li>
+                        <li>Custom Solutions</li>
+                        <li>Training Materials</li>
+                        <li>Priority Support</li>
+                    </ul>
+                    <a href="under_development.Html" class="btn btn-secondary">Partner With Us</a>
+                </div>
+                <div class="sales-card">
+                    <h3>Premium App</h3>
+                    <p>Enhance your SolarGen experience</p>
+                    <div class="price">$4.99/month</div>
+                    <ul>
+                        <li>Advanced Analytics</li>
+                        <li>Personalized AI Advice</li>
+                        <li>Extended Weather Forecasts</li>
+                        <li>Priority Support</li>
+                    </ul>
+                    <a href="under_development.Html" class="btn btn-secondary">Download App</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Team Section -->
+    <section id="team" class="fade-in">
+        <div class="container">
+            <h2>Meet Our Team</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 50px;">SolarGen was founded by four brilliant
+                female engineers committed to sustainable technology and innovation.</p>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="imgs/israa.jpeg" alt="Israa Hatem Al-Tawil" class="member-photo">
+                    <h4 class="member-name">Israa Hatem Al-Tawil</h4>
+                    <p class="member-role">Smart Systems & IoT Engineer</p>
+                    <p>Expert in embedded systems and IoT architecture with 3+ years experience.</p>
+                    <div class="social-links">
+
+                        <a href="https://www.instagram.com/israa_tawil/"><i class="fab fa-instagram"></i></a>
+
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="imgs/furat.jpeg" alt="Furat Hatem Al-Tawil" class="member-photo">
+                    <h4 class="member-name">Furat Hatem Al-Tawil</h4>
+                    <p class="member-role">Technical Translation & Content</p>
+                    <p>Bridges the gap between complex tech and user-friendly communication.</p>
+                    <div class="social-links">
+
+                        <a href="https://www.instagram.com/itsfurat/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="imgs/rawan.jpeg" alt="Rawan Ibrahim Wafi" class="member-photo">
+                    <h4 class="member-name">Rawan Ibrahim Wafi</h4>
+                    <p class="member-role">Project Manager</p>
+                    <p>Process optimization specialist ensuring efficient product development.</p>
+                    <div class="social-links">
+
+                        <a href="https://www.instagram.com/rawan.wafi.71/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="imgs/saja.jpeg" alt="Saja Nasser Abu Hmesa" class="member-photo">
+                    <h4 class="member-name">Saja Nasser Abu Hmesa</h4>
+                    <p class="member-role">AI & Data Science Specialist</p>
+                    <p>Develops the smart algorithms that power SolarGen's predictive features.</p>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/saja-abu-hmesa-2615b433b/"><i
+                                class="fab fa-linkedin"></i></a>
+                        <a href="https://x.com/SHmesa?s=09"><i class="fas fa-xmark"></i></a>
+                        <a href="https://www.instagram.com/saja_abu_hmesa/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="fade-in">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Let's Connect</h3>
+                    <div class="contact-details">
+
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+972 (056) 771-7930</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>solargentech46@gmail.com</span>
+                        </div>
+                    </div>
+                    <h3>Follow Us</h3>
+                    <div class="social-media">
+
+                        <a href="#"><i class="fas fa-xmark"></i></a>
+                        <a href="https://www.instagram.com/solargentech/"><i class="fab fa-instagram"></i></a>
+
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <!-- Replace your current form in the contact section with this: -->
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <div class="contact-btns">
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                            <a href="under_development.Html" class="btn btn-secondary">Invest Now</a>
+                        </div>
+                    </form>
+                    <div id="formMessage" style="display: none; margin-top: 20px;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo logo">
+                    <img src="imgs/logo.png" alt="SolarGen Logo" class="footer-logo-img">
+                    <span class="footer-logo-text">SolarGen</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#problem">The Problem</a>
+                    <a href="#solution">Our Solution</a>
+                    <a href="#features">Features</a>
+                    <a href="#team">Our Team</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="copyright">
+                    &copy; 2025 SolarGen. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+
+        // Smooth Scrolling for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                if (this.getAttribute('href') === '#') return;
+
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+
+                    // Close mobile menu if open
+                    if (mainNav.classList.contains('active')) {
+                        mainNav.classList.remove('active');
+                    }
+                }
+            });
+        });
+
+        // Scroll Animation
+        const fadeElements = document.querySelectorAll('.fade-in');
+
+        const appearOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const appearOnScroll = new IntersectionObserver((entries, appearOnScroll) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('visible');
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+
+        fadeElements.forEach(fadeElement => {
+            appearOnScroll.observe(fadeElement);
+        });
+
+        // Header Scroll Effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                document.querySelector('header').style.padding = '10px 0';
+            } else {
+                document.querySelector('header').style.padding = '15px 0';
+            }
+        });
+    </script>
+</body>
+
+</html>
